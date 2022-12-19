@@ -1,27 +1,22 @@
 <template>
-  <div>
-    <p>Post</p>
-    <PrismicRichText v-if="document" :field="document.data.post_title" />
-    <PrismicRichText v-if="document" :field="document.data.post_text" />
-    <PrismicImage v-if="document" :field="document.data.post_image" />
+  <div class="flex flex-col justify-center mt-10" v-if="document">
+    <div
+      class="w-7/12 flex border border-slate-300 p-4 rounded-lg mx-auto mt-9"
+      v-for="(post_item, index) in document.data.post"
+      :key="index"
+    >
+      <div>
+        <PrismicImage :field="post_item.post_image" />
+      </div>
 
-    <br />
-
-    <PrismicRichText
-      v-if="document"
-      :field="document.data.profile[0].profile_heading"
-    />
-    <PrismicRichText
-      v-if="document"
-      :field="document.data.profile[0].profile_body"
-    />
-    <PrismicImage
-      v-if="document"
-      :field="document.data.profile[0].profile_image"
-    />
-    <p v-if="document">
-      {{ document.data.profile[0].first_publication_date }}
-    </p>
+      <div class="col-span-3 p-6">
+        <PrismicRichText :field="post_item.post_body" />
+        <br />
+        <PrismicText :field="post_item.post_heading" class="text-xl" />
+        <br />
+        <p>{{ post_item.first_publication_date }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
